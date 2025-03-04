@@ -22,7 +22,6 @@ public class MinesweeperGame {
     public static void main(String[] args) {
 
         showGameStartComments();
-        
         initializeGame();
 
         while (true) {
@@ -40,7 +39,6 @@ public class MinesweeperGame {
 
             String cellInput = getCellInputFromUser();
             String userActionIInput = getActionInputFromUser();
-
             actOnCell(cellInput, userActionIInput);
         }
     }
