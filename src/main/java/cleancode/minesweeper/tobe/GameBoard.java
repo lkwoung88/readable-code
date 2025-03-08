@@ -1,6 +1,6 @@
 package cleancode.minesweeper.tobe;
 
-import cleancode.minesweeper.tobe.cell.Cell2;
+import cleancode.minesweeper.tobe.cell.Cell;
 import cleancode.minesweeper.tobe.cell.EmptyCell;
 import cleancode.minesweeper.tobe.cell.LandMineCell;
 import cleancode.minesweeper.tobe.cell.NumberCell;
@@ -11,23 +11,23 @@ import java.util.Random;
 
 public class GameBoard {
 
-    private final Cell2[][] board;
+    private final Cell[][] board;
     private final int landMineCount;
 
     public GameBoard(GameLevel gameLevel) {
         int rowSize = gameLevel.getRowSize();
         int colSize = gameLevel.getColumnSize();
-        this.board = new Cell2[rowSize][colSize];
+        this.board = new Cell[rowSize][colSize];
         this.landMineCount = gameLevel.getLandMineCount();
     }
 
     public void flag(int rowIndex, int colIndex) {
-        Cell2 cell = findCell(rowIndex, colIndex);
+        Cell cell = findCell(rowIndex, colIndex);
         cell.flag();
     }
 
     public void open(int selectedRowIndex, int selectedColIndex) {
-        Cell2 cell = board[selectedRowIndex][selectedColIndex];
+        Cell cell = board[selectedRowIndex][selectedColIndex];
         cell.open();
     }
 
@@ -72,7 +72,7 @@ public class GameBoard {
     }
 
     public boolean isLandMineCell(int selectedRowIndex, int selectedColIndex) {
-        Cell2 cell = this.findCell(selectedRowIndex, selectedColIndex);
+        Cell cell = this.findCell(selectedRowIndex, selectedColIndex);
         return cell.isLandMine();
     }
 
@@ -99,7 +99,6 @@ public class GameBoard {
             int landMineRow = new Random().nextInt(rowSize);
 
             LandMineCell landMineCell = new LandMineCell();
-            landMineCell.turnOnLandMine();
             board[landMineRow][landMineCol] = landMineCell;
         }
 
@@ -115,9 +114,7 @@ public class GameBoard {
                     continue;
                 }
 
-                NumberCell numberCell = new NumberCell();
-                numberCell.updateNearbyLandMineCount(count);
-                board[row][col] = numberCell;
+                board[row][col] = new NumberCell(count);
             }
         }
     }
@@ -131,11 +128,11 @@ public class GameBoard {
     }
 
     public String getSign(int rowIndex, int colIndex) {
-        Cell2 cell = this.findCell(rowIndex, colIndex);
+        Cell cell = this.findCell(rowIndex, colIndex);
         return cell.getSign();
     }
 
-    private Cell2 findCell(int rowIndex, int colIndex) {
+    private Cell findCell(int rowIndex, int colIndex) {
         return board[rowIndex][colIndex];
     }
 
