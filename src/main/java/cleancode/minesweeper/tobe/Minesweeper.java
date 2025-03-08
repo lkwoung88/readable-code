@@ -1,10 +1,12 @@
 package cleancode.minesweeper.tobe;
 
+import cleancode.minesweeper.tobe.game.GameInitializable;
+import cleancode.minesweeper.tobe.game.GameRunable;
 import cleancode.minesweeper.tobe.gamelevel.GameLevel;
 import cleancode.minesweeper.tobe.io.ConsoleInputHandler;
 import cleancode.minesweeper.tobe.io.ConsoleOutputHandler;
 
-public class Minesweeper implements Game {
+public class Minesweeper implements GameInitializable, GameRunable {
 
     private final GameBoard gameBoard;
     private final BoardIndexConvertor boardIndexConvertor = new BoardIndexConvertor();

@@ -1,11 +1,8 @@
 package cleancode.minesweeper.tobe;
 
-public class AnotherGame implements Game {
+import cleancode.minesweeper.tobe.game.GameRunable;
 
-    @Override
-    public void initialize() {
-        // ... 필요없는데..? -> ISP 위반
-    }
+public class AnotherGame implements GameRunable {
 
     @Override
     public void run() {
