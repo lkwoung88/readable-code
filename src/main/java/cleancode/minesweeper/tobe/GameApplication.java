@@ -13,6 +13,7 @@ public class GameApplication {
         // GameLevel gameLevel = new VeryBeginner();
 
         Minesweeper minesweeper = new Minesweeper(gameLevel);
+        minesweeper.initialize();
         minesweeper.run();
     }
 }
