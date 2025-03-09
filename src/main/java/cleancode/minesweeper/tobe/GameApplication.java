@@ -2,6 +2,10 @@ package cleancode.minesweeper.tobe;
 
 import cleancode.minesweeper.tobe.gamelevel.Beginner;
 import cleancode.minesweeper.tobe.gamelevel.GameLevel;
+import cleancode.minesweeper.tobe.io.ConsoleInputHandler;
+import cleancode.minesweeper.tobe.io.ConsoleOutputHandler;
+import cleancode.minesweeper.tobe.io.InputHandler;
+import cleancode.minesweeper.tobe.io.OutputHandler;
 
 public class GameApplication {
 
@@ -12,7 +16,12 @@ public class GameApplication {
         // GameLevel gameLevel = new Advanced();
         // GameLevel gameLevel = new VeryBeginner();
 
-        Minesweeper minesweeper = new Minesweeper(gameLevel);
+        // DIP : 추상화로 분리된 객체를 사용
+        InputHandler consoleInputHandler = new ConsoleInputHandler();
+        OutputHandler consoleOutputHandler = new ConsoleOutputHandler();
+
+        // DI : 외부에서 의존성을 주입
+        Minesweeper minesweeper = new Minesweeper(gameLevel, consoleInputHandler, consoleOutputHandler);
         minesweeper.initialize();
         minesweeper.run();
     }
