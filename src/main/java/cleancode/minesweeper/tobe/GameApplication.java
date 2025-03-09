@@ -1,5 +1,6 @@
 package cleancode.minesweeper.tobe;
 
+import cleancode.minesweeper.tobe.config.GameConfig;
 import cleancode.minesweeper.tobe.gamelevel.Beginner;
 import cleancode.minesweeper.tobe.gamelevel.GameLevel;
 import cleancode.minesweeper.tobe.io.ConsoleInputHandler;
@@ -20,8 +21,10 @@ public class GameApplication {
         InputHandler consoleInputHandler = new ConsoleInputHandler();
         OutputHandler consoleOutputHandler = new ConsoleOutputHandler();
 
+        GameConfig gameConfig = new GameConfig(gameLevel, consoleInputHandler, consoleOutputHandler);
+
         // DI : 외부에서 의존성을 주입
-        Minesweeper minesweeper = new Minesweeper(gameLevel, consoleInputHandler, consoleOutputHandler);
+        Minesweeper minesweeper = new Minesweeper(gameConfig);
         minesweeper.initialize();
         minesweeper.run();
     }
