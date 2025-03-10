@@ -7,6 +7,7 @@ import cleancode.minesweeper.tobe.minesweeper.board.position.CellPositions;
 import cleancode.minesweeper.tobe.minesweeper.board.position.RelativePosition;
 
 import java.util.List;
+import java.util.Stack;
 
 public class GameBoard {
 
@@ -147,30 +148,43 @@ public class GameBoard {
     }
 
     private void openSurroundedCells(CellPosition cellPosition) {
+        Stack<CellPosition> stack = new Stack<>();
+        stack.push(cellPosition);
 
-
-        if (cellPosition.isRowIndexMoreThanOrEqualTo(getRowSize())
-                || cellPosition.isColumnIndexMoreThanOrEqualTo(getColSize())) {
-            return;
+        while (!stack.isEmpty()) {
+            openAndPushCellAt(stack);
         }
-
-        if (isOpenedCell(cellPosition)) {
-            return;
-        }
-
-        if (isLandMineCellAt(cellPosition)) {
-            return;
-        }
-
-        this.openOneCellAt(cellPosition);
-
-        if (doesCellHanLandMineCount(cellPosition)) {
-            return;
-        }
-
-        List<CellPosition> surroundedPositions = calculateSurroundedPositions(cellPosition, getRowSize(), getColSize());
-        surroundedPositions.forEach(this::openSurroundedCells);
     }
+
+    private void openAndPushCellAt(Stack<CellPosition> stack) {
+
+        CellPosition currentCellPosition = stack.pop();
+
+        if (currentCellPosition.isRowIndexMoreThanOrEqualTo(getRowSize())
+                || currentCellPosition.isColumnIndexMoreThanOrEqualTo(getColSize())) {
+            return;
+        }
+
+        if (isOpenedCell(currentCellPosition)) {
+            return;
+        }
+
+        if (isLandMineCellAt(currentCellPosition)) {
+            return;
+        }
+
+        this.openOneCellAt(currentCellPosition);
+
+        if (doesCellHanLandMineCount(currentCellPosition)) {
+            return;
+        }
+
+        List<CellPosition> surroundedPositions = calculateSurroundedPositions(currentCellPosition, getRowSize(), getColSize());
+        for (CellPosition position : surroundedPositions) {
+            stack.push(position);
+        }
+    }
+
 
     private void openOneCellAt(CellPosition cellPosition) {
         Cell cell = findCell(cellPosition);
