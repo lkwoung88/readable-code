@@ -28,14 +28,17 @@ public class StudyCafePassMachine {
                 outputHandler.showAnnouncement();
 
                 outputHandler.askPassTypeSelection();
-                StudyCafePassType studyCafePassType = inputHandler.getPassTypeSelectingUserAction();
+                String passTypeSelectingUserAction = inputHandler.getPassTypeSelectingUserAction();
+                StudyCafePassType studyCafePassType = StudyCafePassType.fromSelection(passTypeSelectingUserAction);
 
                 if (studyCafePassType == StudyCafePassType.HOURLY) {
                     List<StudyCafePass> hourlyPasses = getList(studyCafePasses, StudyCafePassType.HOURLY);
 
                     outputHandler.showPassListForSelection(hourlyPasses);
 
-                    StudyCafePass selectedPass = inputHandler.getSelectPass(hourlyPasses);
+                    int selectPassIndex = inputHandler.getSelectPassIndex();
+                    StudyCafePass selectedPass = hourlyPasses.get(selectPassIndex);
+
                     outputHandler.showPassOrderSummary(selectedPass, null);
                 }
                 else if (studyCafePassType == StudyCafePassType.WEEKLY) {
@@ -43,7 +46,9 @@ public class StudyCafePassMachine {
 
                     outputHandler.showPassListForSelection(weeklyPasses);
 
-                    StudyCafePass selectedPass = inputHandler.getSelectPass(weeklyPasses);
+                    int selectPassIndex = inputHandler.getSelectPassIndex();
+                    StudyCafePass selectedPass = weeklyPasses.get(selectPassIndex);
+
                     outputHandler.showPassOrderSummary(selectedPass, null);
                 }
                 else if (studyCafePassType == StudyCafePassType.FIXED) {
@@ -51,7 +56,8 @@ public class StudyCafePassMachine {
 
                     outputHandler.showPassListForSelection(fixedPasses);
 
-                    StudyCafePass selectedPass = inputHandler.getSelectPass(fixedPasses);
+                    int selectPassIndex = inputHandler.getSelectPassIndex();
+                    StudyCafePass selectedPass = fixedPasses.get(selectPassIndex);
 
                     StudyCafeLockerPass lockerPass = lockerPasses.stream()
                         .filter(option ->
