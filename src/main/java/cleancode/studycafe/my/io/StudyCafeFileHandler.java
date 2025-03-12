@@ -1,7 +1,8 @@
 package cleancode.studycafe.my.io;
 
-import cleancode.studycafe.my.model.StudyCafeLockerPass;
-import cleancode.studycafe.my.model.StudyCafePass;
+import cleancode.studycafe.my.model.Charge;
+import cleancode.studycafe.my.model.locker.StudyCafeLockerPass;
+import cleancode.studycafe.my.model.pass.StudyCafePass;
 import cleancode.studycafe.my.model.StudyCafePassType;
 
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class StudyCafeFileHandler {
                 int price = Integer.parseInt(values[2]);
                 double discountRate = Double.parseDouble(values[3]);
 
-                StudyCafePass studyCafePass = StudyCafePass.of(studyCafePassType, duration, price, discountRate);
+                StudyCafePass studyCafePass = StudyCafePass.of(studyCafePassType, Charge.of(duration, price, discountRate));
                 studyCafePasses.add(studyCafePass);
             }
 
@@ -46,7 +47,7 @@ public class StudyCafeFileHandler {
                 int duration = Integer.parseInt(values[1]);
                 int price = Integer.parseInt(values[2]);
 
-                StudyCafeLockerPass lockerPass = StudyCafeLockerPass.of(studyCafePassType, duration, price);
+                StudyCafeLockerPass lockerPass = StudyCafeLockerPass.of(studyCafePassType, Charge.of(duration, price, 0));
                 lockerPasses.add(lockerPass);
             }
 

@@ -4,9 +4,9 @@ import cleancode.studycafe.my.exception.AppException;
 import cleancode.studycafe.my.io.InputHandler;
 import cleancode.studycafe.my.io.OutputHandler;
 import cleancode.studycafe.my.io.StudyCafeFileHandler;
-import cleancode.studycafe.my.model.StudyCafeLockerPass;
-import cleancode.studycafe.my.model.StudyCafePass;
+import cleancode.studycafe.my.model.locker.StudyCafeLockerPass;
 import cleancode.studycafe.my.model.StudyCafePassType;
+import cleancode.studycafe.my.model.pass.StudyCafePass;
 
 import java.util.List;
 
