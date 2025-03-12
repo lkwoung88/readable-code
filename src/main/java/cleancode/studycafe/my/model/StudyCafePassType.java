@@ -1,8 +1,5 @@
 package cleancode.studycafe.my.model;
 
-import cleancode.studycafe.my.model.pass.PassTypeFormat;
-import cleancode.studycafe.my.model.pass.StudyCafePass;
-
 import java.util.Arrays;
 import java.util.List;
 
