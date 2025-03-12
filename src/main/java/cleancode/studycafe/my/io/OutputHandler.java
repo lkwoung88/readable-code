@@ -1,7 +1,7 @@
 package cleancode.studycafe.my.io;
 
-import cleancode.studycafe.my.model.StudyCafeLockerPass;
-import cleancode.studycafe.my.model.StudyCafePass;
+import cleancode.studycafe.my.model.locker.StudyCafeLockerPass;
+import cleancode.studycafe.my.model.pass.StudyCafePass;
 
 import java.util.List;
 
