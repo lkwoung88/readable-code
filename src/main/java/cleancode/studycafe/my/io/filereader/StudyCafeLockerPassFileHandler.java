@@ -4,7 +4,6 @@ import cleancode.studycafe.my.model.Charge;
 import cleancode.studycafe.my.model.StudyCafePassType;
 import cleancode.studycafe.my.model.locker.StudyCafeLockerPass;
 import cleancode.studycafe.my.model.locker.StudyCafeLockerPasses;
-import cleancode.studycafe.my.model.pass.StudyCafePasses;
 
 import java.io.IOException;
 import java.nio.file.Files;
