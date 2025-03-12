@@ -17,6 +17,9 @@ public class StudyCafePasses {
         return new StudyCafePasses(studyCafePasses);
     }
 
-
-
+    public List<StudyCafePass> getList(StudyCafePassType passType) {
+        return this.studyCafePasses.stream()
+            .filter(studyCafePass -> studyCafePass.getPassType().equals(passType))
+            .toList();
+    }
 }
