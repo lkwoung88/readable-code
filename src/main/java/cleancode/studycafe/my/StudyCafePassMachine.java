@@ -3,6 +3,7 @@ package cleancode.studycafe.my;
 import cleancode.studycafe.my.exception.AppException;
 import cleancode.studycafe.my.io.InputHandler;
 import cleancode.studycafe.my.io.OutputHandler;
+import cleancode.studycafe.my.io.StudyCafeIOHandler;
 import cleancode.studycafe.my.io.filereader.StudyCafeLockerPassFileHandler;
 import cleancode.studycafe.my.io.filereader.StudyCafePassFileHandler;
 import cleancode.studycafe.my.model.order.StudyCafePassOrder;
@@ -17,24 +18,22 @@ import java.util.Optional;
 
 public class StudyCafePassMachine {
 
-    private final InputHandler inputHandler = new InputHandler();
-    private final OutputHandler outputHandler = new OutputHandler();
-
+    private final StudyCafeIOHandler ioHandler;
     private StudyCafeSeatPasses studyCafeSeatPasses;
     private StudyCafeLockerPasses lockerPasses;
 
-    public void initialize(){
-        StudyCafeLockerPassFileHandler studyCafeLockerPassFileHandler = new StudyCafeLockerPassFileHandler();
-        StudyCafePassFileHandler studyCafeFileHandler = new StudyCafePassFileHandler();
+    private final StudyCafeLockerPassFileHandler studyCafeLockerPassFileHandler;
+    private final StudyCafePassFileHandler studyCafeFileHandler;
 
-        this.studyCafeSeatPasses = studyCafeFileHandler.readStudyCafePasses();
-        this.lockerPasses = studyCafeLockerPassFileHandler.readLockerPasses();
+    public StudyCafePassMachine(StudyCafeIOHandler ioHandler, StudyCafeLockerPassFileHandler studyCafeLockerPassFileHandler, StudyCafePassFileHandler studyCafeFileHandler) {
+        this.ioHandler = ioHandler;
+        this.studyCafeLockerPassFileHandler = studyCafeLockerPassFileHandler;
+        this.studyCafeFileHandler = studyCafeFileHandler;
     }
 
     public void run() {
         try {
-            this.initialize();
-
+            initialize();
             showWelcomeAnnounce();
 
             StudyCafePassType studyCafePassType = selectPassType();
@@ -45,15 +44,19 @@ public class StudyCafePassMachine {
             showTotalPrice(passOrder);
 
         } catch (AppException e) {
-            outputHandler.showSimpleMessage(e.getMessage());
+            ioHandler.showSimpleMessage(e.getMessage());
         } catch (Exception e) {
-            outputHandler.showSimpleMessage("알 수 없는 오류가 발생했습니다.");
+            ioHandler.showSimpleMessage("알 수 없는 오류가 발생했습니다.");
         }
     }
 
+    private void initialize() {
+        this.studyCafeSeatPasses = studyCafeFileHandler.readStudyCafePasses();
+        this.lockerPasses = studyCafeLockerPassFileHandler.readLockerPasses();
+    }
+
     private StudyCafePassType selectPassType() {
-        outputHandler.askPassTypeSelection();
-        String passTypeSelectingUserAction = inputHandler.getPassTypeSelectingUserAction();
+        String passTypeSelectingUserAction = ioHandler.askPassTypeSelecting();
         StudyCafePassType studyCafePassType = StudyCafePassType.fromSelection(passTypeSelectingUserAction);
         return studyCafePassType;
     }
@@ -61,9 +64,7 @@ public class StudyCafePassMachine {
     private StudyCafeSeatPass selectSeatPass(StudyCafePassType studyCafePassType) {
         List<StudyCafeSeatPass> seatPasses = studyCafeSeatPasses.getList(studyCafePassType);
 
-        outputHandler.showPassListForSelection(seatPasses);
-
-        int selectPassIndex = inputHandler.getSelectPassIndex();
+        int selectPassIndex = ioHandler.askSeatPassSelecting(seatPasses);
         StudyCafeSeatPass selectedPass = seatPasses.get(selectPassIndex);
         return selectedPass;
     }
@@ -72,8 +73,7 @@ public class StudyCafePassMachine {
         Optional<StudyCafeLockerPass> lockerPass = lockerPasses.getLockerPass(selectedPass);
 
         if (lockerPass.isPresent()) {
-            outputHandler.askLockerPass(lockerPass.get());
-            boolean lockerSelection = inputHandler.getLockerSelection();
+            boolean lockerSelection = ioHandler.askLockerPass(lockerPass.get());
             return lockerSelection ? Optional.of(lockerPass.get()) : Optional.empty();
         }
 
@@ -81,12 +81,12 @@ public class StudyCafePassMachine {
     }
 
     private void showWelcomeAnnounce() {
-        outputHandler.showWelcomeMessage();
-        outputHandler.showAnnouncement();
+        ioHandler.showWelcomeMessage();
+        ioHandler.showAnnouncement();
     }
 
     private void showTotalPrice(StudyCafePassOrder passOrder) {
-        outputHandler.showPassOrderSummary(passOrder);
+        ioHandler.showPassOrderSummary(passOrder);
     }
 
 }
