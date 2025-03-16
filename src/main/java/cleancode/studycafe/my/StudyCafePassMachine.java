@@ -8,8 +8,8 @@ import cleancode.studycafe.my.io.filereader.StudyCafePassFileHandler;
 import cleancode.studycafe.my.model.locker.StudyCafeLockerPass;
 import cleancode.studycafe.my.model.StudyCafePassType;
 import cleancode.studycafe.my.model.locker.StudyCafeLockerPasses;
-import cleancode.studycafe.my.model.pass.StudyCafePass;
-import cleancode.studycafe.my.model.pass.StudyCafePasses;
+import cleancode.studycafe.my.model.seat.StudyCafeSeatPass;
+import cleancode.studycafe.my.model.seat.StudyCafeSeatPasses;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,14 +19,14 @@ public class StudyCafePassMachine {
     private final InputHandler inputHandler = new InputHandler();
     private final OutputHandler outputHandler = new OutputHandler();
 
-    private StudyCafePasses studyCafePasses;
+    private StudyCafeSeatPasses studyCafeSeatPasses;
     private StudyCafeLockerPasses lockerPasses;
 
     public void initialize(){
         StudyCafeLockerPassFileHandler studyCafeLockerPassFileHandler = new StudyCafeLockerPassFileHandler();
         StudyCafePassFileHandler studyCafeFileHandler = new StudyCafePassFileHandler();
 
-        this.studyCafePasses = studyCafeFileHandler.readStudyCafePasses();
+        this.studyCafeSeatPasses = studyCafeFileHandler.readStudyCafePasses();
         this.lockerPasses = studyCafeLockerPassFileHandler.readLockerPasses();
     }
 
@@ -41,19 +41,21 @@ public class StudyCafePassMachine {
             String passTypeSelectingUserAction = inputHandler.getPassTypeSelectingUserAction();
             StudyCafePassType studyCafePassType = StudyCafePassType.fromSelection(passTypeSelectingUserAction);
 
-            List<StudyCafePass> cafePasses = studyCafePasses.getList(studyCafePassType);
+            List<StudyCafeSeatPass> cafePasses = studyCafeSeatPasses.getList(studyCafePassType);
 
             outputHandler.showPassListForSelection(cafePasses);
 
             int selectPassIndex = inputHandler.getSelectPassIndex();
-            StudyCafePass selectedPass = cafePasses.get(selectPassIndex);
+            StudyCafeSeatPass selectedPass = cafePasses.get(selectPassIndex);
 
             Optional<StudyCafeLockerPass> lockerPass = lockerPasses.getLockerPass(selectedPass);
 
             lockerPass.ifPresentOrElse(
                 pass -> {
                     outputHandler.askLockerPass(lockerPass.get());
-                    outputHandler.showPassOrderSummary(selectedPass, lockerPass.get());
+                    boolean lockerSelection = inputHandler.getLockerSelection();
+                    outputHandler.showPassOrderSummary(selectedPass,
+                        lockerSelection? lockerPass.get() : null);
                 },
                 () -> outputHandler.showPassOrderSummary(selectedPass)
             );
