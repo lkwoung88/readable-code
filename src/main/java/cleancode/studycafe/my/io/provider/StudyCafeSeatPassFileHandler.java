@@ -1,9 +1,10 @@
-package cleancode.studycafe.my.io.filereader;
+package cleancode.studycafe.my.io.provider;
 
 import cleancode.studycafe.my.model.Charge;
 import cleancode.studycafe.my.model.StudyCafePassType;
 import cleancode.studycafe.my.model.pass.seat.StudyCafeSeatPass;
 import cleancode.studycafe.my.model.pass.seat.StudyCafeSeatPasses;
+import cleancode.studycafe.my.provider.SeatPassProvider;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,11 +12,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudyCafePassFileHandler {
+public class StudyCafeSeatPassFileHandler implements SeatPassProvider {
 
     private static final String STUDYCAFE_PASS_LIST_CSV = "src/main/resources/cleancode/studycafe/pass-list.csv";
 
-    public StudyCafeSeatPasses readStudyCafePasses() {
+    @Override
+    public StudyCafeSeatPasses getSeatPasses() {
         try {
             List<String> lines = Files.readAllLines(Paths.get(STUDYCAFE_PASS_LIST_CSV));
             List<StudyCafeSeatPass> studyCafeSeatPasses = new ArrayList<>();
