@@ -13,7 +13,7 @@ import java.util.List;
 
 public class StudyCafeLockerPassFileHandler {
 
-    public static final String STUDYCAFE_LOCKER_CSV = "src/main/resources/cleancode/studycafe/locker.csv";
+    private static final String STUDYCAFE_LOCKER_CSV = "src/main/resources/cleancode/studycafe/locker.csv";
 
     public StudyCafeLockerPasses readLockerPasses() {
         try {

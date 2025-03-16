@@ -12,6 +12,7 @@ import cleancode.studycafe.my.model.pass.StudyCafePass;
 import cleancode.studycafe.my.model.pass.StudyCafePasses;
 
 import java.util.List;
+import java.util.Optional;
 
 public class StudyCafePassMachine {
 
@@ -47,20 +48,15 @@ public class StudyCafePassMachine {
             int selectPassIndex = inputHandler.getSelectPassIndex();
             StudyCafePass selectedPass = cafePasses.get(selectPassIndex);
 
-            StudyCafeLockerPass lockerPass = lockerPasses.getLockerPass(selectedPass);
+            Optional<StudyCafeLockerPass> lockerPass = lockerPasses.getLockerPass(selectedPass);
 
-            boolean lockerSelection = false;
-
-            if (lockerPass != null) {
-                outputHandler.askLockerPass(lockerPass);
-                lockerSelection = inputHandler.getLockerSelection();
-            }
-
-            if (lockerSelection) {
-                outputHandler.showPassOrderSummary(selectedPass, lockerPass);
-            } else {
-                outputHandler.showPassOrderSummary(selectedPass, null);
-            }
+            lockerPass.ifPresentOrElse(
+                pass -> {
+                    outputHandler.askLockerPass(lockerPass.get());
+                    outputHandler.showPassOrderSummary(selectedPass, lockerPass.get());
+                },
+                () -> outputHandler.showPassOrderSummary(selectedPass)
+            );
 
         } catch (AppException e) {
             outputHandler.showSimpleMessage(e.getMessage());
