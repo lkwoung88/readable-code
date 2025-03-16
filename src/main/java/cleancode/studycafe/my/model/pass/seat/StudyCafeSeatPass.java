@@ -1,4 +1,4 @@
-package cleancode.studycafe.my.model.seat;
+package cleancode.studycafe.my.model.pass.seat;
 
 import cleancode.studycafe.my.model.Charge;
 import cleancode.studycafe.my.model.StudyCafePassType;
@@ -27,6 +27,4 @@ public class StudyCafeSeatPass implements StudyCafePass {
     public Charge getCharge() {
         return charge;
     }
-
-
 }

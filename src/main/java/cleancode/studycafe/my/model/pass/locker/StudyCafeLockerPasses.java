@@ -1,6 +1,6 @@
-package cleancode.studycafe.my.model.locker;
+package cleancode.studycafe.my.model.pass.locker;
 
-import cleancode.studycafe.my.model.seat.StudyCafeSeatPass;
+import cleancode.studycafe.my.model.pass.seat.StudyCafeSeatPass;
 
 import java.util.List;
 import java.util.Optional;

@@ -2,8 +2,8 @@ package cleancode.studycafe.my.io.filereader;
 
 import cleancode.studycafe.my.model.Charge;
 import cleancode.studycafe.my.model.StudyCafePassType;
-import cleancode.studycafe.my.model.seat.StudyCafeSeatPass;
-import cleancode.studycafe.my.model.seat.StudyCafeSeatPasses;
+import cleancode.studycafe.my.model.pass.seat.StudyCafeSeatPass;
+import cleancode.studycafe.my.model.pass.seat.StudyCafeSeatPasses;
 
 import java.io.IOException;
 import java.nio.file.Files;
