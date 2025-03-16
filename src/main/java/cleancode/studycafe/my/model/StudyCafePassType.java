@@ -3,27 +3,11 @@ package cleancode.studycafe.my.model;
 import java.util.Arrays;
 import java.util.List;
 
-public enum StudyCafePassType implements PassTypeFormat {
+public enum StudyCafePassType {
 
-    HOURLY("1","시간 단위 이용권") {
-        @Override
-        public String format(Charge charge) {
-            return String.format("%s시간권 - %d원", charge.getDuration(), charge.getPrice());
-        }
-    },
-    WEEKLY("2","주 단위 이용권") {
-        @Override
-        public String format (Charge charge) {
-            return String.format("%s주권 - %d원", charge.getDuration(), charge.getPrice());
-        }
-    },
-
-    FIXED("3","1인 고정석") {
-        @Override
-        public String format(Charge charge) {
-            return String.format("%s주권 - %d원", charge.getDuration(), charge.getPrice());
-        }
-    },
+    HOURLY("1","시간 단위 이용권"),
+    WEEKLY("2","주 단위 이용권"),
+    FIXED("3","1인 고정석"),
     ;
 
     private final String selection;

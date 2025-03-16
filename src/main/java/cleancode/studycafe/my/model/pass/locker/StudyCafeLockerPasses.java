@@ -1,8 +1,9 @@
-package cleancode.studycafe.my.model.locker;
+package cleancode.studycafe.my.model.pass.locker;
 
-import cleancode.studycafe.my.model.pass.StudyCafePass;
+import cleancode.studycafe.my.model.pass.seat.StudyCafeSeatPass;
 
 import java.util.List;
+import java.util.Optional;
 
 public class StudyCafeLockerPasses {
 
@@ -16,13 +17,12 @@ public class StudyCafeLockerPasses {
         return new StudyCafeLockerPasses(studyCafeLockerPasses);
     }
 
-    public StudyCafeLockerPass getLockerPass(StudyCafePass selectedPass) {
+    public Optional<StudyCafeLockerPass> getLockerPass(StudyCafeSeatPass selectedPass) {
         return this.studyCafeLockerPasses.stream()
             .filter(option ->
                 option.getPassType() == selectedPass.getPassType()
-                    && option.getDuration() == selectedPass.getDuration()
+                    && option.getCharge().getDuration() == selectedPass.getCharge().getDuration()
             )
-            .findFirst()
-            .orElse(null);
+            .findFirst();
     }
 }

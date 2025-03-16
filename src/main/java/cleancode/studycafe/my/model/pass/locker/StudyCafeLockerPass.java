@@ -1,9 +1,12 @@
-package cleancode.studycafe.my.model.locker;
+package cleancode.studycafe.my.model.pass.locker;
 
 import cleancode.studycafe.my.model.Charge;
 import cleancode.studycafe.my.model.StudyCafePassType;
+import cleancode.studycafe.my.model.pass.StudyCafePass;
 
-public class StudyCafeLockerPass {
+public class StudyCafeLockerPass implements StudyCafePass {
+
+    private static final StudyCafeLockerPass EMPTY_LOCKER_PASS = new StudyCafeLockerPass(null, Charge.EMPTY_CHARGE);
 
     private final StudyCafePassType passType;
     private final Charge charge;
@@ -17,20 +20,13 @@ public class StudyCafeLockerPass {
         return new StudyCafeLockerPass(passType, charge);
     }
 
+    @Override
     public StudyCafePassType getPassType() {
         return passType;
     }
 
-    public int getDuration() {
-        return charge.getDuration();
+    @Override
+    public Charge getCharge() {
+        return charge;
     }
-
-    public int getPrice() {
-        return charge.getPrice();
-    }
-
-    public String display() {
-        return passType.format(this.charge);
-    }
-
 }

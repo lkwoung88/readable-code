@@ -2,6 +2,8 @@ package cleancode.studycafe.my.model;
 
 public class Charge {
 
+    public static final Charge EMPTY_CHARGE = Charge.of(0, 0, 0.0);
+
     private final int duration;
     private final int price;
     private final double discountRate;
@@ -26,5 +28,13 @@ public class Charge {
 
     public double getDiscountRate() {
         return discountRate;
+    }
+
+    public int getCharge() {
+        return (int) (price * (1 - discountRate));
+    }
+
+    public int getDiscountPrice() {
+        return (int) (price * discountRate);
     }
 }

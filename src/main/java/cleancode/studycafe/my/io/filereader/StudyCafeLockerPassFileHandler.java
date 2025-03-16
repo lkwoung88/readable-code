@@ -2,8 +2,8 @@ package cleancode.studycafe.my.io.filereader;
 
 import cleancode.studycafe.my.model.Charge;
 import cleancode.studycafe.my.model.StudyCafePassType;
-import cleancode.studycafe.my.model.locker.StudyCafeLockerPass;
-import cleancode.studycafe.my.model.locker.StudyCafeLockerPasses;
+import cleancode.studycafe.my.model.pass.locker.StudyCafeLockerPass;
+import cleancode.studycafe.my.model.pass.locker.StudyCafeLockerPasses;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class StudyCafeLockerPassFileHandler {
 
-    public static final String STUDYCAFE_LOCKER_CSV = "src/main/resources/cleancode/studycafe/locker.csv";
+    private static final String STUDYCAFE_LOCKER_CSV = "src/main/resources/cleancode/studycafe/locker.csv";
 
     public StudyCafeLockerPasses readLockerPasses() {
         try {
