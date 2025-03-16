@@ -1,17 +1,17 @@
 package cleancode.studycafe.my;
 
 import cleancode.studycafe.my.exception.AppException;
-import cleancode.studycafe.my.io.InputHandler;
-import cleancode.studycafe.my.io.OutputHandler;
 import cleancode.studycafe.my.io.StudyCafeIOHandler;
-import cleancode.studycafe.my.io.filereader.StudyCafeLockerPassFileHandler;
-import cleancode.studycafe.my.io.filereader.StudyCafePassFileHandler;
+import cleancode.studycafe.my.io.provider.StudyCafeLockerPassFileHandler;
+import cleancode.studycafe.my.io.provider.StudyCafeSeatPassFileHandler;
 import cleancode.studycafe.my.model.order.StudyCafePassOrder;
 import cleancode.studycafe.my.model.pass.locker.StudyCafeLockerPass;
 import cleancode.studycafe.my.model.StudyCafePassType;
 import cleancode.studycafe.my.model.pass.locker.StudyCafeLockerPasses;
 import cleancode.studycafe.my.model.pass.seat.StudyCafeSeatPass;
 import cleancode.studycafe.my.model.pass.seat.StudyCafeSeatPasses;
+import cleancode.studycafe.my.provider.LockerPassProvider;
+import cleancode.studycafe.my.provider.SeatPassProvider;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,13 +22,13 @@ public class StudyCafePassMachine {
     private StudyCafeSeatPasses studyCafeSeatPasses;
     private StudyCafeLockerPasses lockerPasses;
 
-    private final StudyCafeLockerPassFileHandler studyCafeLockerPassFileHandler;
-    private final StudyCafePassFileHandler studyCafeFileHandler;
+    private final LockerPassProvider studyCafeLockerPassFileHandler;
+    private final SeatPassProvider studyCafeFileHandler;
 
-    public StudyCafePassMachine(StudyCafeIOHandler ioHandler, StudyCafeLockerPassFileHandler studyCafeLockerPassFileHandler, StudyCafePassFileHandler studyCafeFileHandler) {
+    public StudyCafePassMachine(StudyCafeIOHandler ioHandler, LockerPassProvider lockerPassProvider, SeatPassProvider seatPassProvider) {
         this.ioHandler = ioHandler;
-        this.studyCafeLockerPassFileHandler = studyCafeLockerPassFileHandler;
-        this.studyCafeFileHandler = studyCafeFileHandler;
+        this.studyCafeLockerPassFileHandler = lockerPassProvider;
+        this.studyCafeFileHandler = seatPassProvider;
     }
 
     public void run() {
@@ -51,8 +51,8 @@ public class StudyCafePassMachine {
     }
 
     private void initialize() {
-        this.studyCafeSeatPasses = studyCafeFileHandler.readStudyCafePasses();
-        this.lockerPasses = studyCafeLockerPassFileHandler.readLockerPasses();
+        this.studyCafeSeatPasses = studyCafeFileHandler.getSeatPasses();
+        this.lockerPasses = studyCafeLockerPassFileHandler.getLockerPasses();
     }
 
     private StudyCafePassType selectPassType() {

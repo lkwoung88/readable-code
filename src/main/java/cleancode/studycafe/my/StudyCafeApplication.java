@@ -1,8 +1,8 @@
 package cleancode.studycafe.my;
 
 import cleancode.studycafe.my.io.StudyCafeIOHandler;
-import cleancode.studycafe.my.io.filereader.StudyCafeLockerPassFileHandler;
-import cleancode.studycafe.my.io.filereader.StudyCafePassFileHandler;
+import cleancode.studycafe.my.io.provider.StudyCafeLockerPassFileHandler;
+import cleancode.studycafe.my.io.provider.StudyCafeSeatPassFileHandler;
 
 public class StudyCafeApplication {
 
@@ -10,7 +10,7 @@ public class StudyCafeApplication {
 
         StudyCafeIOHandler ioHandler = new StudyCafeIOHandler();
         StudyCafeLockerPassFileHandler studyCafeLockerPassFileHandler = new StudyCafeLockerPassFileHandler();
-        StudyCafePassFileHandler studyCafeFileHandler = new StudyCafePassFileHandler();
+        StudyCafeSeatPassFileHandler studyCafeFileHandler = new StudyCafeSeatPassFileHandler();
 
         StudyCafePassMachine studyCafePassMachine = new StudyCafePassMachine(ioHandler, studyCafeLockerPassFileHandler, studyCafeFileHandler);
         studyCafePassMachine.run();
